@@ -11,7 +11,7 @@
       <!-- These are here just toWhat needs to be done?lass `editing` when editing and `completed` when marked as completed -->
       <li *ngFor="let item of todos | filter: filterType" [class.completed]="item.done">
         <div class="view">
-          <input class="toggle" type="checkbox" [(ngModel)]="item.done">
+          <input class="toggle" type="checkbox" [(ngModel)]="item.done" (ngModelChange)="updateTodo(item)">
           <label [ngStyle]="{color: item.done ? 'green' : 'red'}">{{ item.text | uppercase }}</label>
           <button class="destroy" (click)="removeTodo(item)"></button>
         </div>
