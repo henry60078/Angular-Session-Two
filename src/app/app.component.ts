@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,11 @@ export class AppComponent {
   todos = [];
   todo = '';
   filterType = 'All';
+  isToggleAll = false;
+
+  constructor(private http: HttpClient) {
+
+  }
 
   addTodo(){
     if (this.todo) {
@@ -31,5 +37,15 @@ export class AppComponent {
   updateFilterType(value) {
     console.log(value);
     this.filterType = value;
+  }
+
+  toggleAll() {
+    this.todos.forEach(item => {
+      item.done = this.isToggleAll;
+    });
+  }
+
+  removeTodo(todo) {
+    this.todos = this.todos.filter(item => item !== todo);
   }
 }

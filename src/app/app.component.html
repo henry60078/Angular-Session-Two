@@ -5,7 +5,7 @@
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main" *ngIf="todos.length">
-    <input class="toggle-all" type="checkbox">
+    <input class="toggle-all" type="checkbox" [(ngModel)]="isToggleAll" (ngModelChange)="toggleAll()">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
       <!-- These are here just toWhat needs to be done?lass `editing` when editing and `completed` when marked as completed -->
@@ -13,7 +13,7 @@
         <div class="view">
           <input class="toggle" type="checkbox" [(ngModel)]="item.done">
           <label [ngStyle]="{color: item.done ? 'green' : 'red'}">{{ item.text | uppercase }}</label>
-          <button class="destroy"></button>
+          <button class="destroy" (click)="removeTodo(item)"></button>
         </div>
         <input class="edit" value="Rule the web">
       </li>
