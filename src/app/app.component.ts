@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -13,25 +13,23 @@ export class AppComponent implements OnInit {
   filterType = 'All';
   isToggleAll = false;
 
-  private apiBase = 'http://localhost:3000/todos';
-
-  constructor(private http: HttpClient) { }
+  constructor(private dataSvc: DataService) { }
 
   ngOnInit() {
-    this.http.get<any[]>(this.apiBase)
+    this.dataSvc.getTodos()
       .subscribe(data => {
         this.todos = data;
       });
   }
 
-  addTodo(){
+  addTodo() {
     if (this.todo) {
       let newTodo = {
         text: this.todo,
         done: false
       };
 
-      this.http.post(this.apiBase, newTodo)
+      this.dataSvc.addTodo(newTodo)
         .subscribe(data => {
           this.todos = this.todos.concat(data);
           this.todo = '';
@@ -47,7 +45,6 @@ export class AppComponent implements OnInit {
   }
 
   updateFilterType(value) {
-    console.log(value);
     this.filterType = value;
   }
 
@@ -58,14 +55,14 @@ export class AppComponent implements OnInit {
   }
 
   removeTodo(todo) {
-    this.http.delete(`${this.apiBase}/${todo.id}`)
+    this.dataSvc.removeTodo(todo)
       .subscribe(data => {
         this.todos = this.todos.filter(item => item !== todo);
       });
   }
 
   updateTodo(todo) {
-    this.http.put(`${this.apiBase}/${todo.id}`, todo)
+    this.dataSvc.updateTodo(todo)
       .subscribe();
   }
 }
