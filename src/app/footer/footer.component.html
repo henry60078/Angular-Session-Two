@@ -1,0 +1,18 @@
+<footer class="footer" *ngIf="todos.length">
+  <!-- This should be `0 items left` by default -->
+  <span class="todo-count" [ngStyle]="{color: tooMore ? 'red' : ''}"><strong>{{ todos.length }}</strong> item left</span>
+  <!-- Remove this if you don't implement routing -->
+  <ul class="filters">
+    <li>
+      <a [class.selected]="filterType === 'All'" (click)="changeFilterType('All')">All</a>
+    </li>
+    <li>
+      <a [class.selected]="filterType === 'Active'" (click)="changeFilterType('Active')">Active</a>
+    </li>
+    <li>
+      <a [class.selected]="filterType === 'Completed'" (click)="changeFilterType('Completed')">Completed</a>
+    </li>
+  </ul>
+  <!-- Hidden if no completed items are left ↓ -->
+  <button class="clear-completed" (click)="clearBtnClick.emit()">Clear completed</button>
+</footer>
